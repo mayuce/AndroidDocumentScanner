@@ -1,0 +1,12 @@
+<!--
+  ~ /**
+  ~  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
+  ~  * on Github: /mayuce
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 3/4/19 4:53 PM
+  ~  */
+  -->
+
+<resources>
+    <string name="app_name">DocumentScanner</string>
+</resources>

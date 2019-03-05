@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /**
+  ~  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
+  ~  * on Github: /mayuce
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 3/5/19 4:14 PM
+  ~  */
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:fancy="http://schemas.android.com/apk/res-auto"
+        tools:context=".ImageCropActivity"
+        android:background="#ffffff"
+        android:id="@+id/PnlContainer"
+>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/btnImageCrop"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            fancy:layout_constraintStart_toStartOf="parent"
+            fancy:layout_constraintBottom_toBottomOf="parent"
+            fancy:layout_constraintEnd_toEndOf="parent"
+            fancy:fb_text="CROP"
+            fancy:fb_defaultColor="@color/colorPrimary"
+            fancy:fb_focusColor="@color/colorPrimaryDark"
+            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+            app:layout_constraintHorizontal_bias="1.0"/>
+    <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/btnClose"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            fancy:fb_text="CLOSE"
+            fancy:fb_defaultColor="@color/colorAccent"
+            fancy:fb_focusColor="@color/colorPrimary"
+            android:layout_marginBottom="8dp" android:layout_marginStart="8dp"/>
+
+    <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnImageCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivRotate">
+
+        <FrameLayout
+                android:id="@+id/holderImageCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="8dp">
+
+            <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"/>
+        </FrameLayout>
+
+        <team.clevel.documentscanner.libraries.PolygonView
+                android:id="@+id/polygonView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+    </FrameLayout>
+
+    <ImageView
+            android:id="@+id/ivRotate"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_rotate"
+            android:foreground="?android:selectableItemBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+    />
+    <ImageView
+            android:id="@+id/ivRebase"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_align"
+            android:foreground="?android:selectableItemBackground"
+            fancy:layout_constraintEnd_toEndOf="parent"
+            fancy:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="@+id/ivInvert"
+    />
+    <ImageView
+            android:id="@+id/ivInvert"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_invert_colors"
+            android:foreground="?android:selectableItemBackground"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginTop="8dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

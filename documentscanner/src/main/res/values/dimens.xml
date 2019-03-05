@@ -1,0 +1,21 @@
+<!--
+  ~ /**
+  ~  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
+  ~  * on Github: /mayuce
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 3/4/19 10:04 AM
+  ~  */
+  -->
+
+<resources>
+
+    // Scanner Dimens
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="scanPadding">16dp</dimen>
+    <dimen name="polygonViewCircleWidth">32dp</dimen>
+    <dimen name="polygonViewStrokeWidth">2dp</dimen>
+    <dimen name="bottom_bar_padding">15dp</dimen>
+    //
+
+</resources>

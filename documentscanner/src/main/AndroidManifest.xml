@@ -1,0 +1,22 @@
+<!--
+  ~ /**
+  ~  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
+  ~  * on Github: /mayuce
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 3/5/19 3:43 PM
+  ~  */
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+          package="team.clevel.documentscanner">
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+<application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        tools:ignore="GoogleAppIndexingWarning">
+    <activity android:name=".ImageCropActivity"
+              android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+</application>
+</manifest>
