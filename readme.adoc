@@ -2,6 +2,8 @@
 
 This library helps you to scan any document like CamScanner.
 
+image::documentscannerMockup.png[]
+
 ## Requirements
 
 You need to implement openCV to run this library via import module on Android Studio. Use OpenCV library on this repository.
@@ -12,7 +14,7 @@ Follow the lines below:
 * Click finish
 * Sync gradle
 * File -> Project Structure -> Select *app* under modules (this is your app module) -> Go to *dependencies* tab
-* Click *+* button -> Module dependency -> Select *openCVLibrary -> Click ok -> Click ok
+* Click *+* button -> Module dependency -> Select *openCVLibrary* -> Click ok -> Click ok
 * Sync gradle
 
 Add line below to your *top* level build.gradle
@@ -22,7 +24,7 @@ Add line below to your *top* level build.gradle
 allprojects {
     repositories {
         /// ....
-        *maven { url "https://jitpack.io" }*
+        maven { url "https://jitpack.io" }
     }
 }
 ----
@@ -86,7 +88,7 @@ There was an error about progress dialog when doing the process. That's why I've
 
 ## Thanks
 
-Thanks RX library to improve this project.
-Thanks OpenCV for this awesome library. - https://opencv.org/
+* Thanks RX library to improve this project.
+* Thanks OpenCV for this awesome library. - https://opencv.org/
 and
-Inspiration from *aashari* . Thanks him for his source codes. - https://github.com/aashari/android-opencv-camera-scanner
+* Inspiration from *aashari* . Thanks him for his source codes. - https://github.com/aashari/android-opencv-camera-scanner
