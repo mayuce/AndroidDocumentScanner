@@ -11,7 +11,6 @@ package team.clevel.documentscanner;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ContextWrapper;
 import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,10 +18,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.widget.*;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -47,6 +44,7 @@ public class ImageCropActivity extends Activity {
     private Button btnImageCrop,btnClose;
     private NativeClass nativeClass;
     private boolean isInverted;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +83,26 @@ public class ImageCropActivity extends Activity {
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
+    private void setProgressBar(boolean isShow)
+    {
+        RelativeLayout rlContainer=findViewById(R.id.rlContainer);
+        setViewInterract(rlContainer,!isShow);
+        if (isShow)
+            progressBar.setVisibility(View.VISIBLE);
+        else
+            progressBar.setVisibility(View.GONE);
+    }
+
+    private void setViewInterract(View view,boolean canDo)
+    {
+        view.setEnabled(canDo);
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                setViewInterract(((ViewGroup) view).getChildAt(i),canDo);
+            }
+        }
+    }
+
     @SuppressLint({"CheckResult", "ClickableViewAccessibility"})
     private void initializeElement() {
         nativeClass = new NativeClass();
@@ -98,9 +116,12 @@ public class ImageCropActivity extends Activity {
         btnImageCrop.setText(ScannerConstants.cropText);
         btnClose.setText(ScannerConstants.backText);
         polygonView = findViewById(R.id.polygonView);
-      /*  progressDialog = new ProgressDialog(ImageCropActivity.this);
-        progressDialog.setMessage(ScannerConstants.loadingDescription);
-        progressDialog.show();*/
+        progressBar = findViewById(R.id.progressBar);
+        if (progressBar.getIndeterminateDrawable()!=null && ScannerConstants.progressColor!=null)
+            progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor(ScannerConstants.progressColor), android.graphics.PorterDuff.Mode.MULTIPLY);
+        else if (progressBar.getProgressDrawable()!=null && ScannerConstants.progressColor!=null)
+            progressBar.getProgressDrawable().setColorFilter(Color.parseColor(ScannerConstants.progressColor), android.graphics.PorterDuff.Mode.MULTIPLY);
+        setProgressBar(true);
         btnImageCrop.setBackgroundColor(Color.parseColor(ScannerConstants.cropColor));
         btnClose.setBackgroundColor(Color.parseColor(ScannerConstants.backColor));
         Observable.fromCallable(() -> {
@@ -110,8 +131,7 @@ public class ImageCropActivity extends Activity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((result) -> {
-                   /* if (progressDialog!=null)
-                        progressDialog.dismiss();*/
+                    setProgressBar(false);
                     holderImageCrop.post(this::initializeCropping);
                     btnImageCrop.setOnClickListener(btnImageEnhanceClick);
                     btnClose.setOnClickListener(btnCloseClick);
@@ -155,10 +175,7 @@ public class ImageCropActivity extends Activity {
         @SuppressLint("CheckResult")
         @Override
         public void onClick(View v) {
-           /* if (progressDialog==null)
-                progressDialog = new ProgressDialog(ImageCropActivity.this);
-            progressDialog.setMessage(ScannerConstants.loadingDescription);
-            progressDialog.show();*/
+            setProgressBar(true);
             Observable.fromCallable(() -> {
                 ScannerConstants.selectedImageBitmap = getCroppedImage();
                 if (ScannerConstants.selectedImageBitmap ==null)
@@ -170,8 +187,7 @@ public class ImageCropActivity extends Activity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((result) -> {
-                      /*  if (progressDialog!=null)
-                            progressDialog.dismiss();*/
+                        setProgressBar(false);
                         if (ScannerConstants.selectedImageBitmap !=null)
                         {
                             setResult(RESULT_OK);
@@ -215,10 +231,7 @@ public class ImageCropActivity extends Activity {
         @SuppressLint("CheckResult")
         @Override
         public void onClick(View v) {
-            /* if (progressDialog==null)
-                progressDialog = new ProgressDialog(ImageCropActivity.this);
-            progressDialog.setMessage(ScannerConstants.loadingDescription);
-            progressDialog.show();*/
+            setProgressBar(true);
             Observable.fromCallable(() -> {
                 invertColor();
                 return false;
@@ -226,8 +239,7 @@ public class ImageCropActivity extends Activity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((result) -> {
-                       /* if (progressDialog!=null)
-                            progressDialog.dismiss();*/
+                        setProgressBar(false);
                         Bitmap scaledBitmap = scaledBitmap(selectedImageBitmap, holderImageCrop.getWidth(), holderImageCrop.getHeight());
                         imageView.setImageBitmap(scaledBitmap);
                     });
@@ -240,10 +252,7 @@ public class ImageCropActivity extends Activity {
         @SuppressLint("CheckResult")
         @Override
         public void onClick(View v) {
-           /* if (progressDialog==null)
-                progressDialog = new ProgressDialog(ImageCropActivity.this);
-            progressDialog.setMessage(ScannerConstants.loadingDescription);
-            progressDialog.show();*/
+            setProgressBar(true);
             Observable.fromCallable(() -> {
                 if (isInverted)
                     invertColor();
@@ -253,8 +262,7 @@ public class ImageCropActivity extends Activity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((result) -> {
-                      /*  if (progressDialog!=null)
-                            progressDialog.dismiss();*/
+                        setProgressBar(false);
                         initializeElement();
                     });
         }
@@ -295,7 +303,7 @@ public class ImageCropActivity extends Activity {
             float y2 = (points.get(1).y) * yRatio;
             float y3 = (points.get(2).y) * yRatio;
             float y4 = (points.get(3).y) * yRatio;
-        return nativeClass.getScannedBitmap(selectedImageBitmap, x1, y1, x2, y2, x3, y3, x4, y4);
+            return nativeClass.getScannedBitmap(selectedImageBitmap, x1, y1, x2, y2, x3, y3, x4, y4);
         }catch (Exception e)
         {
             runOnUiThread(new Runnable() {
@@ -320,7 +328,7 @@ public class ImageCropActivity extends Activity {
         return orderedPoints;
     }
 
-    private List<PointF> getContourEdgePoints(Bitmap tempBitmap) throws Exception {
+    private List<PointF> getContourEdgePoints(Bitmap tempBitmap) {
         MatOfPoint2f point2f = nativeClass.getPoint(tempBitmap);
         if (point2f==null)
             point2f= new MatOfPoint2f();

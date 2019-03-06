@@ -12,11 +12,10 @@ package team.clevel.documentscanner.helpers;
 import android.graphics.Bitmap;
 
 public class ScannerConstants {
-    public final static int GALLERY_IMAGE_LOADED = 1001;
     public static Bitmap selectedImageBitmap;
     public static String cropText="KIRP",backText="KAPAT",
-            loadingDescription="Lütfen Bekleyin",imageError="Görsel seçilmedi, lütfen tekrar deneyin.",
+            imageError="Görsel seçilmedi, lütfen tekrar deneyin.",
             cropError="Geçerli bir alan seçmediniz. Lütfen çizgiler mavi olana dek düzeltme yapın.";
-    public static String cropColor="#6666ff",backColor="#ff0000";
-    public static boolean saveStorage=true;
+    public static String cropColor="#6666ff",backColor="#ff0000",progressColor="#331199";
+    public static boolean saveStorage=false;
 }
