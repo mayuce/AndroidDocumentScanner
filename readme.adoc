@@ -1,6 +1,6 @@
 # Android Document Scanner Library
 
-image::https://img.shields.io/badge/version-1.3-green.svg[]
+image::https://img.shields.io/badge/version-1.4-green.svg[]
 image::https://img.shields.io/badge/minSDK-19-blue.svg[]
 image::https://img.shields.io/badge/license-MIT-yellowgreen.svg[]
 
@@ -79,16 +79,15 @@ You can customize something in layout via ScannerConstants.
     // ScannerConstants.java
     public static String cropText="CROP",
             backText="CLOSE",
-            loadingDescription="Please wait",
             imageError="Can't picked image,
             please try again.",
             cropError="You have not selected a valid field. Please make corrections until the lines are blue.";
-    public static String cropColor="#6666ff",backColor="#ff0000";
-    public static boolean saveStorage=true; // Make it false if you don't need image in your storage. 
+    public static String cropColor="#6666ff",backColor="#ff0000",progressColor="#331199"; // Default Colors 
+    public static boolean saveStorage=false; // Make it true if you need image in your storage. 
 ----
 ## TO-DO
 
-There was an error about progress dialog when doing the process. That's why I've removed it, I'll add something to disable user interract while doing process.
+Nothing
 
 ## Thanks
 
