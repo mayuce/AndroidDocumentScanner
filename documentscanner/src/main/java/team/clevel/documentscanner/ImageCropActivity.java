@@ -45,7 +45,6 @@ public class ImageCropActivity extends Activity {
     private PolygonView polygonView;
     private Bitmap selectedImageBitmap,tempBitmapOrginal;
     private Button btnImageCrop,btnClose;
-    private ProgressDialog progressDialog;
     private NativeClass nativeClass;
     private boolean isInverted;
     @Override
@@ -99,9 +98,9 @@ public class ImageCropActivity extends Activity {
         btnImageCrop.setText(ScannerConstants.cropText);
         btnClose.setText(ScannerConstants.backText);
         polygonView = findViewById(R.id.polygonView);
-        progressDialog = new ProgressDialog(ImageCropActivity.this);
+      /*  progressDialog = new ProgressDialog(ImageCropActivity.this);
         progressDialog.setMessage(ScannerConstants.loadingDescription);
-        progressDialog.show();
+        progressDialog.show();*/
         btnImageCrop.setBackgroundColor(Color.parseColor(ScannerConstants.cropColor));
         btnClose.setBackgroundColor(Color.parseColor(ScannerConstants.backColor));
         Observable.fromCallable(() -> {
@@ -111,8 +110,8 @@ public class ImageCropActivity extends Activity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((result) -> {
-                    if (progressDialog!=null)
-                        progressDialog.dismiss();
+                   /* if (progressDialog!=null)
+                        progressDialog.dismiss();*/
                     holderImageCrop.post(this::initializeCropping);
                     btnImageCrop.setOnClickListener(btnImageEnhanceClick);
                     btnClose.setOnClickListener(btnCloseClick);
@@ -156,10 +155,10 @@ public class ImageCropActivity extends Activity {
         @SuppressLint("CheckResult")
         @Override
         public void onClick(View v) {
-            if (progressDialog==null)
+           /* if (progressDialog==null)
                 progressDialog = new ProgressDialog(ImageCropActivity.this);
             progressDialog.setMessage(ScannerConstants.loadingDescription);
-            progressDialog.show();
+            progressDialog.show();*/
             Observable.fromCallable(() -> {
                 ScannerConstants.selectedImageBitmap = getCroppedImage();
                 if (ScannerConstants.selectedImageBitmap ==null)
@@ -171,8 +170,8 @@ public class ImageCropActivity extends Activity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((result) -> {
-                        if (progressDialog!=null)
-                            progressDialog.dismiss();
+                      /*  if (progressDialog!=null)
+                            progressDialog.dismiss();*/
                         if (ScannerConstants.selectedImageBitmap !=null)
                         {
                             setResult(RESULT_OK);
@@ -216,10 +215,10 @@ public class ImageCropActivity extends Activity {
         @SuppressLint("CheckResult")
         @Override
         public void onClick(View v) {
-            if (progressDialog==null)
+            /* if (progressDialog==null)
                 progressDialog = new ProgressDialog(ImageCropActivity.this);
             progressDialog.setMessage(ScannerConstants.loadingDescription);
-            progressDialog.show();
+            progressDialog.show();*/
             Observable.fromCallable(() -> {
                 invertColor();
                 return false;
@@ -227,8 +226,8 @@ public class ImageCropActivity extends Activity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((result) -> {
-                        if (progressDialog!=null)
-                            progressDialog.dismiss();
+                       /* if (progressDialog!=null)
+                            progressDialog.dismiss();*/
                         Bitmap scaledBitmap = scaledBitmap(selectedImageBitmap, holderImageCrop.getWidth(), holderImageCrop.getHeight());
                         imageView.setImageBitmap(scaledBitmap);
                     });
@@ -241,10 +240,10 @@ public class ImageCropActivity extends Activity {
         @SuppressLint("CheckResult")
         @Override
         public void onClick(View v) {
-            if (progressDialog==null)
+           /* if (progressDialog==null)
                 progressDialog = new ProgressDialog(ImageCropActivity.this);
             progressDialog.setMessage(ScannerConstants.loadingDescription);
-            progressDialog.show();
+            progressDialog.show();*/
             Observable.fromCallable(() -> {
                 if (isInverted)
                     invertColor();
@@ -254,8 +253,8 @@ public class ImageCropActivity extends Activity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((result) -> {
-                        if (progressDialog!=null)
-                            progressDialog.dismiss();
+                      /*  if (progressDialog!=null)
+                            progressDialog.dismiss();*/
                         initializeElement();
                     });
         }
