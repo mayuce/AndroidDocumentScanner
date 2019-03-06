@@ -1,0 +1,19 @@
+# Android Document Scanner Library
+
+This library helps to scan any document like CamScanner.
+
+I'll add more information later.
+
+## Requirements
+
+You need to implement openCV to run this library.
+
+## Usage
+
+This title is going to be filled.
+
+## Thanks
+
+Thanks OpenCV for this awesome library. - https://opencv.org/
+and
+Inspiration from *aashari* . Thanks him for his source codes. - https://github.com/aashari/android-opencv-camera-scanner
