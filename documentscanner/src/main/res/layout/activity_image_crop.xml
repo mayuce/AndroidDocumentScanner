@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
   ~  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
   ~  * on Github: /mayuce
@@ -8,126 +7,119 @@
   ~  */
   -->
 
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".ImageCropActivity">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ImageCropActivity"
         android:background="#ffffff"
-        android:id="@+id/rlContainer"
->
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ImageCropActivity"
-            android:background="#ffffff"
-            android:orientation="vertical"
-            android:weightSum="10">
+        android:orientation="vertical"
+        android:weightSum="10"
+        tools:context=".ImageCropActivity">
+
         <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1">
+
             <ImageView
-                    android:id="@+id/ivRotate"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/ic_rotate"
-                    android:foreground="?android:selectableItemBackground"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-            />
+                android:id="@+id/ivRotate"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:foreground="?android:selectableItemBackground"
+                android:padding="5dp"
+                android:src="@drawable/ic_rotate" />
+
             <ImageView
-                    android:id="@+id/ivRebase"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_align"
-                    android:foreground="?android:selectableItemBackground"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-            />
-            <ImageView
-                    android:id="@+id/ivInvert"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_invert_colors"
-                    android:foreground="?android:selectableItemBackground"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-            />
+                android:id="@+id/ivRebase"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:foreground="?android:selectableItemBackground"
+                android:padding="5dp"
+                android:src="@drawable/ic_align" />
+
+
         </RelativeLayout>
+
         <FrameLayout
-                android:id="@+id/frameLayout"
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="8">
+
+            <FrameLayout
+                android:id="@+id/holderImageCrop"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="8"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="10dp">
 
-            <FrameLayout
-                    android:id="@+id/holderImageCrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp">
-
                 <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:adjustViewBounds="true"/>
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true" />
             </FrameLayout>
 
             <team.clevel.documentscanner.libraries.PolygonView
-                    android:id="@+id/polygonView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:visibility="gone"/>
+                android:id="@+id/polygonView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="gone" />
         </FrameLayout>
 
         <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
             <Button
-                    android:id="@+id/btnImageCrop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:minWidth="150dp"
-                    android:layout_alignParentEnd="true"
-                    android:foreground="?android:selectableItemBackground"
-                    android:shadowRadius="10"
-                    android:textColor="#ffffff"
-            />
+                android:id="@+id/btnImageCrop"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:foreground="?android:selectableItemBackground"
+                android:minWidth="150dp"
+                android:shadowRadius="10"
+                android:textColor="#ffffff" />
+
             <Button
-                    android:id="@+id/btnClose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:minWidth="150dp"
-                    android:layout_alignParentStart="true"
-                    android:foreground="?android:selectableItemBackground"
-                    android:shadowRadius="10"
-                    android:textColor="#ffffff"
-            />
+                android:id="@+id/btnClose"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:foreground="?android:selectableItemBackground"
+                android:minWidth="150dp"
+                android:shadowRadius="10"
+                android:textColor="#ffffff" />
         </RelativeLayout>
     </LinearLayout>
+
     <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/halfTransparentBackground"
-            android:padding="100dp"
-    />
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/halfTransparentBackground"
+        android:padding="100dp" />
 </RelativeLayout>
