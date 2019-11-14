@@ -61,7 +61,7 @@ import team.clevel.documentscanner.libraries.PolygonView;
 public class ImageCropActivity extends Activity {
 
     private FrameLayout holderImageCrop;
-    private ImageView ivRotate, ivInvert, ivRebase;
+    private ImageView ivRotate, ivRebase;
     private ImageView imageView;
     private PolygonView polygonView;
     private Bitmap selectedImageBitmap, tempBitmapOrginal;
@@ -150,7 +150,6 @@ public class ImageCropActivity extends Activity {
                     btnImageCrop.setOnClickListener(btnImageEnhanceClick);
                     btnClose.setOnClickListener(btnCloseClick);
                     ivRotate.setOnClickListener(onRotateClick);
-                    ivInvert.setOnClickListener(btnInvertColor);
                     ivRebase.setOnClickListener(btnRebase);
                 });
     }
@@ -218,49 +217,29 @@ public class ImageCropActivity extends Activity {
     private View.OnClickListener btnCloseClick = v -> finish();
 
     private void invertColor() {
-            Bitmap bmpMonochrome = Bitmap.createBitmap(selectedImageBitmap.getWidth(), selectedImageBitmap.getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bmpMonochrome);
-            ColorMatrix ma = new ColorMatrix();
-            ma.setSaturation(0);
-            Paint paint = new Paint();
-            paint.setColorFilter(new ColorMatrixColorFilter(ma));
-            canvas.drawBitmap(selectedImageBitmap, 0, 0, paint);
-            selectedImageBitmap = bmpMonochrome.copy(bmpMonochrome.getConfig(), true);
+        Bitmap bmpMonochrome = Bitmap.createBitmap(selectedImageBitmap.getWidth(), selectedImageBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmpMonochrome);
+        ColorMatrix ma = new ColorMatrix();
+        ma.setSaturation(0);
+        Paint paint = new Paint();
+        paint.setColorFilter(new ColorMatrixColorFilter(ma));
+        canvas.drawBitmap(selectedImageBitmap, 0, 0, paint);
+        selectedImageBitmap = bmpMonochrome.copy(bmpMonochrome.getConfig(), true);
 
-            Mat src = new Mat(selectedImageBitmap.getHeight(), selectedImageBitmap.getWidth(), CvType.CV_8UC4);
-            Utils.bitmapToMat(selectedImageBitmap, src);
-            Mat src_gray = new Mat(selectedImageBitmap.getHeight(), selectedImageBitmap.getWidth(), CvType.CV_8UC1);
+        Mat src = new Mat(selectedImageBitmap.getHeight(), selectedImageBitmap.getWidth(), CvType.CV_8UC4);
+        Utils.bitmapToMat(selectedImageBitmap, src);
+        Mat src_gray = new Mat(selectedImageBitmap.getHeight(), selectedImageBitmap.getWidth(), CvType.CV_8UC1);
 
-            Imgproc.cvtColor(src, src_gray, Imgproc.COLOR_BGR2GRAY);
-            Imgproc.adaptiveThreshold(src_gray, src_gray, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 31, 8);
-            Imgproc.cvtColor(src_gray, src, Imgproc.COLOR_GRAY2RGBA, 4);
+        Imgproc.cvtColor(src, src_gray, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.adaptiveThreshold(src_gray, src_gray, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 31, 8);
+        Imgproc.cvtColor(src_gray, src, Imgproc.COLOR_GRAY2RGBA, 4);
 
-            Bitmap processedImage = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888);
-            Utils.matToBitmap(src, processedImage);
+        Bitmap processedImage = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(src, processedImage);
 
-            selectedImageBitmap = processedImage;
+        selectedImageBitmap = processedImage;
     }
 
-    private View.OnClickListener btnInvertColor = new View.OnClickListener() {
-        @SuppressLint("CheckResult")
-        @Override
-        public void onClick(View v) {
-            setProgressBar(true);
-            Observable.fromCallable(() -> {
-                invertColor();
-                return false;
-            })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((result) -> {
-                        setProgressBar(false);
-                        Bitmap scaledBitmap = scaledBitmap(selectedImageBitmap, holderImageCrop.getWidth(), holderImageCrop.getHeight());
-                        imageView.setImageBitmap(scaledBitmap);
-                    });
-
-
-        }
-    };
 
     private View.OnClickListener onRotateClick = new View.OnClickListener() {
         @SuppressLint("CheckResult")
