@@ -23,8 +23,14 @@ import android.widget.*;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
+import org.opencv.imgproc.Imgproc;
+
 import team.clevel.documentscanner.helpers.ScannerConstants;
 import team.clevel.documentscanner.libraries.NativeClass;
 import team.clevel.documentscanner.libraries.PolygonView;
@@ -219,6 +225,19 @@ public class ImageCropActivity extends Activity {
             paint.setColorFilter(new ColorMatrixColorFilter(ma));
             canvas.drawBitmap(selectedImageBitmap, 0, 0, paint);
             selectedImageBitmap=bmpMonochrome.copy(bmpMonochrome.getConfig(),true);
+
+            Mat src = new Mat(selectedImageBitmap.getHeight(), selectedImageBitmap.getWidth(), CvType.CV_8UC4);
+            Utils.bitmapToMat(selectedImageBitmap, src);
+            Mat src_gray = new Mat(selectedImageBitmap.getHeight(), selectedImageBitmap.getWidth(), CvType.CV_8UC1);
+
+            Imgproc.cvtColor(src, src_gray, Imgproc.COLOR_BGR2GRAY);
+            Imgproc.adaptiveThreshold(src_gray, src_gray, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 31, 8);
+            Imgproc.cvtColor(src_gray, src, Imgproc.COLOR_GRAY2RGBA, 4);
+
+            Bitmap processedImage = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(src, processedImage);
+
+            selectedImageBitmap = processedImage;
         }
         else
         {

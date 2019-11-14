@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /Users/muhammetsmac/Downloads/DocumentScannerAndroid/openCVLibrary/src/main/aidl/org/opencv/engine/OpenCVEngineInterface.aidl
+ * Original file: /Users/soljic/AndroidStudioProjects/AndroidDocumentScanner/openCVLibrary/src/main/aidl/org/opencv/engine/OpenCVEngineInterface.aidl
  */
 package org.opencv.engine;
 /**
