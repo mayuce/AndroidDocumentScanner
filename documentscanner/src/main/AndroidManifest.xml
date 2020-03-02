@@ -1,15 +1,15 @@
 <!--
   ~ /**
-  ~  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
-  ~  * on Github: /mayuce
-  ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 3/5/19 3:43 PM
+  ~  * Created by Ali YÜCE on 3/2/20 11:18 PM
+  ~  * https://github.com/mayuce/
+  ~  * Copyright (c) 2020 . All rights reserved.
+  ~  * Last modified 3/2/20 11:10 PM
   ~  */
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        package="team.clevel.documentscanner">
+        package="com.labters.documentscanner">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -19,7 +19,7 @@
             android:label="@string/app_name"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name=".ImageCropActivity"
+                android:name="com.labters.documentscanner.ImageCropActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 </manifest>

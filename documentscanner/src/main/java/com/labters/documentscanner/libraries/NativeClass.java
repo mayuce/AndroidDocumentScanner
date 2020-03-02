@@ -1,19 +1,28 @@
 /*
  * *
- *  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
- *  * on Github: /mayuce
- *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 3/4/19 4:56 PM
+ *  * Created by Ali YÜCE on 3/2/20 11:18 PM
+ *  * https://github.com/mayuce/
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 3/2/20 11:10 PM
  *
  */
 
-package team.clevel.documentscanner.libraries;
+package com.labters.documentscanner.libraries;
 
 import android.graphics.Bitmap;
-import org.opencv.core.*;
+
+import com.labters.documentscanner.helpers.ImageUtils;
+import com.labters.documentscanner.helpers.MathUtils;
+
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
-import team.clevel.documentscanner.helpers.ImageUtils;
-import team.clevel.documentscanner.helpers.MathUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -160,11 +169,7 @@ public class NativeClass {
             maxCosine = Math.max(cosine, maxCosine);
         }
 
-        if (maxCosine >= 0.3) {
-            return false;
-        }
-
-        return true;
+        return !(maxCosine >= 0.3);
     }
 
 }

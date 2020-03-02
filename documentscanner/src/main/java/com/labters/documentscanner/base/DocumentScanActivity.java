@@ -1,4 +1,13 @@
-package team.clevel.documentscanner.base;
+/*
+ * *
+ *  * Created by Ali YÜCE on 3/2/20 11:18 PM
+ *  * https://github.com/mayuce/
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 3/2/20 11:10 PM
+ *
+ */
+
+package com.labters.documentscanner.base;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -11,6 +20,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.labters.documentscanner.R;
+import com.labters.documentscanner.libraries.NativeClass;
+import com.labters.documentscanner.libraries.PolygonView;
 
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
@@ -26,9 +39,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import team.clevel.documentscanner.R;
-import team.clevel.documentscanner.libraries.NativeClass;
-import team.clevel.documentscanner.libraries.PolygonView;
 
 public abstract class DocumentScanActivity extends AppCompatActivity {
 

@@ -1,13 +1,13 @@
 /*
  * *
- *  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
- *  * on Github: /mayuce
- *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 3/5/19 4:16 PM
+ *  * Created by Ali YÜCE on 3/2/20 11:18 PM
+ *  * https://github.com/mayuce/
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 3/2/20 11:10 PM
  *
  */
 
-package team.clevel.documentscanner;
+package com.labters.documentscanner;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -27,6 +27,11 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.labters.documentscanner.base.CropperErrorType;
+import com.labters.documentscanner.base.DocumentScanActivity;
+import com.labters.documentscanner.helpers.ScannerConstants;
+import com.labters.documentscanner.libraries.PolygonView;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -36,10 +41,6 @@ import java.util.Locale;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import team.clevel.documentscanner.base.CropperErrorType;
-import team.clevel.documentscanner.base.DocumentScanActivity;
-import team.clevel.documentscanner.helpers.ScannerConstants;
-import team.clevel.documentscanner.libraries.PolygonView;
 
 public class ImageCropActivity extends DocumentScanActivity {
 

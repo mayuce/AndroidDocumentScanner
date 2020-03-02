@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ /**
-  ~  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
-  ~  * on Github: /mayuce
-  ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 3/5/19 4:14 PM
+  ~  * Created by Ali YÜCE on 3/2/20 11:18 PM
+  ~  * https://github.com/mayuce/
+  ~  * Copyright (c) 2020 . All rights reserved.
+  ~  * Last modified 3/2/20 11:10 PM
   ~  */
   -->
 
@@ -13,14 +13,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ImageCropActivity"
+        tools:context="com.labters.documentscanner.ImageCropActivity"
         android:background="#ffffff"
         android:id="@+id/rlContainer"
 >
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ImageCropActivity"
+            tools:context="com.labters.documentscanner.ImageCropActivity"
             android:background="#ffffff"
             android:orientation="vertical"
             android:weightSum="10">
@@ -86,7 +86,7 @@
                         android:adjustViewBounds="true"/>
             </FrameLayout>
 
-            <team.clevel.documentscanner.libraries.PolygonView
+            <com.labters.documentscanner.libraries.PolygonView
                     android:id="@+id/polygonView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

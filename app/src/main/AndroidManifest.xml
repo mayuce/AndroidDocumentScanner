@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /**
+  ~  * Created by Ali YÜCE on 3/2/20 11:18 PM
+  ~  * https://github.com/mayuce/
+  ~  * Copyright (c) 2020 . All rights reserved.
+  ~  * Last modified 3/2/20 11:17 PM
+  ~  */
+  -->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="team.clevel.documentscannerandroid">
+          xmlns:tools="http://schemas.android.com/tools" package="com.labters.documentscannerandroid">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,7 +21,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.labters.documentscannerandroid.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
