@@ -1,13 +1,13 @@
 /*
  * *
- *  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
- *  * on Github: /mayuce
- *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 3/4/19 4:56 PM
+ *  * Created by Ali YÜCE on 3/2/20 11:18 PM
+ *  * https://github.com/mayuce/
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 3/2/20 11:10 PM
  *
  */
 
-package team.clevel.documentscanner.helpers;
+package com.labters.documentscanner.helpers;
 
 import org.opencv.core.CvType;
 import org.opencv.core.MatOfPoint;

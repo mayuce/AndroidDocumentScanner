@@ -1,13 +1,13 @@
 /*
  * *
- *  * Created by Muhammet Ali YÜCE on 3/5/19 4:26 PM
- *  * on Github: /mayuce
- *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 3/5/19 4:11 PM
+ *  * Created by Ali YÜCE on 3/2/20 11:18 PM
+ *  * https://github.com/mayuce/
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 3/2/20 11:10 PM
  *
  */
 
-package team.clevel.documentscanner.libraries;
+package com.labters.documentscanner.libraries;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -21,7 +21,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Magnifier;
-import team.clevel.documentscanner.R;
+
+import com.labters.documentscanner.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

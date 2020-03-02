@@ -1,4 +1,13 @@
-package team.clevel.documentscannerandroid
+/*
+ * *
+ *  * Created by Ali YÜCE on 3/2/20 11:18 PM
+ *  * https://github.com/mayuce/
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 3/2/20 11:17 PM
+ *
+ */
+
+package com.labters.documentscannerandroid
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -21,17 +30,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.kotlinpermissions.KotlinPermissions
-import team.clevel.documentscanner.ImageCropActivity
-import team.clevel.documentscanner.helpers.ScannerConstants
+import com.labters.documentscanner.ImageCropActivity
+import com.labters.documentscanner.helpers.ScannerConstants
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var btnPick : Button
-    lateinit var imgBitmap : ImageView
-    lateinit var  mCurrentPhotoPath: String
+    lateinit var btnPick: Button
+    lateinit var imgBitmap: ImageView
+    lateinit var mCurrentPhotoPath: String
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -39,53 +48,61 @@ class MainActivity : AppCompatActivity() {
             var selectedImage = data.data
             var btimap: Bitmap? = null
             try {
-                Log.e("IamgePath",""+data.data.path)
-                val inputStream = contentResolver.openInputStream(selectedImage)
+                val inputStream = selectedImage?.let { contentResolver.openInputStream(it) }
                 btimap = BitmapFactory.decodeStream(inputStream)
-                ScannerConstants.selectedImageBitmap=btimap
-                startActivityForResult(Intent(MainActivity@this, ImageCropActivity::class.java),1234)
+                ScannerConstants.selectedImageBitmap = btimap
+                startActivityForResult(
+                    Intent(MainActivity@ this, ImageCropActivity::class.java),
+                    1234
+                )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
-        else if (requestCode==1231 && resultCode== Activity.RESULT_OK )
-        {
-            ScannerConstants.selectedImageBitmap=MediaStore.Images.Media.getBitmap(this.contentResolver, Uri.parse(mCurrentPhotoPath))
-            startActivityForResult(Intent(MainActivity@this, ImageCropActivity::class.java),1234)
-        }
-        else if (requestCode==1234 && resultCode== Activity.RESULT_OK )
-        {
-            if (ScannerConstants.selectedImageBitmap!=null)
-            {
+        } else if (requestCode == 1231 && resultCode == Activity.RESULT_OK) {
+            ScannerConstants.selectedImageBitmap = MediaStore.Images.Media.getBitmap(
+                this.contentResolver,
+                Uri.parse(mCurrentPhotoPath)
+            )
+            startActivityForResult(Intent(MainActivity@ this, ImageCropActivity::class.java), 1234)
+        } else if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
+            if (ScannerConstants.selectedImageBitmap != null) {
                 imgBitmap.setImageBitmap(ScannerConstants.selectedImageBitmap)
-                imgBitmap.visibility=View.VISIBLE
-                btnPick.visibility=View.GONE
-            }
-            else
-                Toast.makeText(MainActivity@this,"Not OK",Toast.LENGTH_LONG).show()
+                imgBitmap.visibility = View.VISIBLE
+                btnPick.visibility = View.GONE
+            } else
+                Toast.makeText(MainActivity@ this, "Not OK", Toast.LENGTH_LONG).show()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btnPick=findViewById(R.id.btnPick)
-        imgBitmap=findViewById(R.id.imgBitmap)
+        btnPick = findViewById(R.id.btnPick)
+        imgBitmap = findViewById(R.id.imgBitmap)
         askPermission()
     }
 
-    fun askPermission()
-    {
+    fun askPermission() {
         if (
-            ContextCompat.checkSelfPermission( this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE ) != PackageManager.PERMISSION_GRANTED||
-            ContextCompat.checkSelfPermission( this, android.Manifest.permission.READ_EXTERNAL_STORAGE ) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission( this, android.Manifest.permission.CAMERA ) != PackageManager.PERMISSION_GRANTED)
-        {
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             KotlinPermissions.with(this)
                 .permissions(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA)
+                    Manifest.permission.CAMERA
+                )
                 .onAccepted { permissions ->
                     setView()
                 }
@@ -93,30 +110,31 @@ class MainActivity : AppCompatActivity() {
                     askPermission()
                 }
                 .onForeverDenied { permissions ->
-                    Toast.makeText(MainActivity@this,"You have to grant permissions! Grant them from app settings please.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        MainActivity@ this,
+                        "You have to grant permissions! Grant them from app settings please.",
+                        Toast.LENGTH_LONG
+                    ).show()
                     finish()
                 }
                 .ask()
-        }
-        else
-        {
-           setView()
+        } else {
+            setView()
         }
     }
 
-    fun setView()
-    {
+    fun setView() {
         btnPick.setOnClickListener(View.OnClickListener {
             val builder = AlertDialog.Builder(this@MainActivity)
             builder.setTitle("Carbon")
             builder.setMessage("Görseli nereden seçmek istesiniz ?")
-            builder.setPositiveButton("Galeri"){dialog, which ->
+            builder.setPositiveButton("Galeri") { dialog, which ->
                 dialog.dismiss()
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
                 startActivityForResult(intent, 1111)
             }
-            builder.setNegativeButton("Kamera"){dialog,which ->
+            builder.setNegativeButton("Kamera") { dialog, which ->
                 dialog.dismiss()
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 if (cameraIntent.resolveActivity(packageManager) != null) {
@@ -127,14 +145,14 @@ class MainActivity : AppCompatActivity() {
                         Log.i("Main", "IOException")
                     }
                     if (photoFile != null) {
-                        val builder = StrictMode.VmPolicy.Builder();
-                        StrictMode.setVmPolicy(builder.build());
+                        val builder = StrictMode.VmPolicy.Builder()
+                        StrictMode.setVmPolicy(builder.build())
                         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile))
                         startActivityForResult(cameraIntent, 1231)
                     }
                 }
             }
-            builder.setNeutralButton("Cancel"){dialog,_ ->
+            builder.setNeutralButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }
             val dialog: AlertDialog = builder.create()
