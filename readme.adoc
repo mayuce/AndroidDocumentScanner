@@ -1,6 +1,6 @@
 # Android Document Scanner Library
 
-image::https://img.shields.io/badge/version-1.4-green.svg[]
+image::https://img.shields.io/badge/version-1.5-green.svg[]
 image::https://img.shields.io/badge/minSDK-19-blue.svg[]
 image::https://img.shields.io/badge/license-MIT-yellowgreen.svg[]
 
@@ -37,8 +37,8 @@ Add lines below to your *app* level build.gradle
 
 [source,bourne]
 ----
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'com.github.mayuce:AndroidDocumentScanner:1.4'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'com.github.mayuce:AndroidDocumentScanner:1.5'
 ----
 
 And Sync the gradle
@@ -85,9 +85,112 @@ You can customize something in layout via ScannerConstants.
     public static String cropColor="#6666ff",backColor="#ff0000",progressColor="#331199"; // Default Colors 
     public static boolean saveStorage=false; // Make it true if you need image in your storage. 
 ----
+
+### (NEW) Version 1.5 Feature - Custom Scanner Activity!
+
+With 1.5 version you have a feature to create your own Document Scanner Activity.
+You still can use old customization via ScannerConstants or you can create a new scanner activity for your layout.
+
+#### HOW 
+
+* Place Scanner layout to your layout
+
+[source,bourne]
+----
+        <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" --- * Set HERE *
+                android:layout_weight="8" --- * Set HERE *
+                android:layout_gravity="center"
+                android:layout_margin="10dp">
+
+            <FrameLayout
+                    android:id="@+id/holderImageCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp">
+
+                <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"/>
+            </FrameLayout>
+
+            <com.labters.documentscanner.libraries.PolygonView
+                    android:id="@+id/polygonView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+        </FrameLayout>
+
+----
+
+* Extend your activity from DocumentScannerActivity
+* Provide values
+
+[source,java]
+----
+    @Override
+    protected FrameLayout getHolderImageCrop() {
+        return holderImageCrop;
+    }
+
+    @Override
+    protected ImageView getImageView() {
+        return imageView;
+    }
+
+    @Override
+    protected PolygonView getPolygonView() {
+        return polygonView;
+    }
+
+    @Override
+    protected Bitmap getBitmapImage() {
+        return cropImage;
+    }
+----
+
+* Override methods
+
+[source,java]
+----
+    @Override
+    protected void showProgressBar() {
+        RelativeLayout rlContainer = findViewById(R.id.rlContainer);
+        setViewInteract(rlContainer, false);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void hideProgressBar() {
+        RelativeLayout rlContainer = findViewById(R.id.rlContainer);
+        setViewInteract(rlContainer, true);
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void showError(CropperErrorType errorType) {
+        switch (errorType) {
+            case CROP_ERROR:
+                Toast.makeText(this, ScannerConstants.cropError, Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+----
+
+And *after* setting your view call *startCropping()* method
+
+If you have a trouble you can follow follow com.labters.documentscanner.ImageCropActivity for how to do that.
+
 ## TO-DO
 
-Nothing
+I already tried it but I’ve lost myself in code and added many features. To make module simple I reverted them. When I have time I need to do some code clean-up.
 
 ## Thanks
 
@@ -100,7 +203,7 @@ and
 ----
 MIT License
 
-Copyright (c) 2019 Muhammet Ali YUCE
+Copyright (c) 2020 Muhammet Ali YUCE
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
