@@ -190,7 +190,7 @@ If you have a trouble you can follow follow com.labters.documentscanner.ImageCro
 
 ## TO-DO
 
-I already tried it but I’ve lost myself in code and added many features. To make module simple I reverted them. When I have time I need to do some code clean-up.
+- Remove RxJava dependency.
 
 ## Thanks
 
