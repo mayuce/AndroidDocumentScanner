@@ -1,6 +1,6 @@
 # Android Document Scanner Library
 
-image::https://img.shields.io/badge/version-1.5-green.svg[]
+image::https://img.shields.io/badge/version-1.5.1-green.svg[]
 image::https://img.shields.io/badge/minSDK-19-blue.svg[]
 image::https://img.shields.io/badge/license-MIT-yellowgreen.svg[]
 
@@ -38,7 +38,7 @@ Add lines below to your *app* level build.gradle
 [source,bourne]
 ----
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'com.github.mayuce:AndroidDocumentScanner:1.5'
+    implementation 'com.github.mayuce:AndroidDocumentScanner:1.5.1'
 ----
 
 And Sync the gradle
@@ -190,7 +190,7 @@ If you have a trouble you can follow follow com.labters.documentscanner.ImageCro
 
 ## TO-DO
 
-I already tried it but I’ve lost myself in code and added many features. To make module simple I reverted them. When I have time I need to do some code clean-up.
+- Remove RxJava dependency.
 
 ## Thanks
 
