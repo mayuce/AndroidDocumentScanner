@@ -142,7 +142,9 @@ public abstract class DocumentScanActivity extends AppCompatActivity {
             float y2 = (Objects.requireNonNull(points.get(1)).y) * yRatio;
             float y3 = (Objects.requireNonNull(points.get(2)).y) * yRatio;
             float y4 = (Objects.requireNonNull(points.get(3)).y) * yRatio;
-            return nativeClass.getScannedBitmap(selectedImage, x1, y1, x2, y2, x3, y3, x4, y4);
+
+            Bitmap finalBitmap = getBitmapImage();
+            return nativeClass.getScannedBitmap(finalBitmap, x1, y1, x2, y2, x3, y3, x4, y4);
         } catch (Exception e) {
             showError(CropperErrorType.CROP_ERROR);
             return null;
