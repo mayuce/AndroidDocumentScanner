@@ -1,7 +1,7 @@
 # Android Document Scanner Library
 
-image::https://img.shields.io/badge/version-1.5.3-green.svg[]
-image::https://img.shields.io/badge/minSDK-19-blue.svg[]
+image::https://img.shields.io/badge/version-1.6.0-green.svg[]
+image::https://img.shields.io/badge/minSDK-21-blue.svg[]
 image::https://img.shields.io/badge/license-MIT-yellowgreen.svg[]
 
 This library helps you to scan any document like CamScanner.
@@ -10,17 +10,6 @@ image::documentscannerMockup.png[]
 
 ## Requirements
 
-You need to implement openCV to run this library via import module on Android Studio. Use OpenCV library on this repository.
-Follow the lines below:
-
-* File -> New -> Import Module
-* Select *" openCVLibrary "* you've downloaded from this repository.
-* Click finish
-* Sync gradle
-* File -> Project Structure -> Select *app* under modules (this is your app module) -> Go to *dependencies* tab
-* Click *+* button -> Module dependency -> Select *openCVLibrary* -> Click ok -> Click ok
-* Sync gradle
-
 Add line below to your *top* level build.gradle
 
 [source,bourne]
@@ -28,7 +17,7 @@ Add line below to your *top* level build.gradle
 allprojects {
     repositories {
         /// ....
-        maven { url "https://jitpack.io" }
+        mavenCentral()
     }
 }
 ----
@@ -38,7 +27,8 @@ Add lines below to your *app* level build.gradle
 [source,bourne]
 ----
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'com.github.mayuce:AndroidDocumentScanner:1.5.3'
+    implementation 'com.quickbirdstudios:opencv:4.5.2'
+    implementation 'io.github.mayuce:AndroidDocumentScanner:1.6.0'
 ----
 
 And Sync the gradle
@@ -86,7 +76,7 @@ You can customize something in layout via ScannerConstants.
     public static boolean saveStorage=false; // Make it true if you need image in your storage. 
 ----
 
-### (NEW) Version 1.5 Feature - Custom Scanner Activity!
+### Custom Scanner Activity
 
 With 1.5 version you have a feature to create your own Document Scanner Activity.
 You still can use old customization via ScannerConstants or you can create a new scanner activity for your layout.
