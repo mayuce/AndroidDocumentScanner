@@ -1,1 +1,1 @@
-include ':app', ':documentscanner', ':openCVLibrary'
+include ':app', ':documentscanner'
