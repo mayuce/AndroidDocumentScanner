@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
   ~  * Created by Ali YÜCE on 3/2/20 11:18 PM
   ~  * https://github.com/mayuce/
@@ -9,16 +8,10 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="halfTransparentBackground">#aacccccc</color>
 
     // Scanner Colors
-    <color name="colorGrey">#cccccc</color>
     <color name="blue">#ff59a9ff</color>
     <color name="orange">#ffff900d</color>
-    <color name="bottom_background_color">#ffc4c2bc</color>
     <color name="polygonViewCircleStrokeColor">#ff59a9ff</color>
     <color name="polygonViewCircleBackground">#90e5f8ff</color>
     //
