@@ -10,12 +10,9 @@
 <resources>
 
     // Scanner Dimens
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="scanPadding">16dp</dimen>
     <dimen name="polygonViewCircleWidth">32dp</dimen>
     <dimen name="polygonViewStrokeWidth">2dp</dimen>
-    <dimen name="bottom_bar_padding">15dp</dimen>
     //
 
 </resources>

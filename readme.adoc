@@ -176,7 +176,7 @@ You still can use old customization via ScannerConstants or you can create a new
 
 And *after* setting your view call *startCropping()* method
 
-If you have a trouble you can follow follow com.labters.documentscanner.ImageCropActivity for how to do that.
+If you have a trouble you can follow follow com.labters.documentscannerandroid.ImageCropActivity for how to do that.
 
 ## TO-DO
 

@@ -14,8 +14,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -30,8 +28,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.kotlinpermissions.KotlinPermissions
-import com.labters.documentscanner.ImageCropActivity
-import com.labters.documentscanner.helpers.ScannerConstants
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -40,37 +36,14 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     lateinit var btnPick: Button
     lateinit var imgBitmap: ImageView
-    lateinit var mCurrentPhotoPath: String
+    lateinit var photoPath: String
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1111 && resultCode == RESULT_OK && data != null) {
-            var selectedImage = data.data
-            var btimap: Bitmap? = null
-            try {
-                val inputStream = selectedImage?.let { contentResolver.openInputStream(it) }
-                btimap = BitmapFactory.decodeStream(inputStream)
-                ScannerConstants.selectedImageBitmap = btimap
-                startActivityForResult(
-                    Intent(MainActivity@ this, ImageCropActivity::class.java),
-                    1234
-                )
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            startActivity(ImageCropActivity.newIntent(this, data.data.toString()))
         } else if (requestCode == 1231 && resultCode == Activity.RESULT_OK) {
-            ScannerConstants.selectedImageBitmap = MediaStore.Images.Media.getBitmap(
-                this.contentResolver,
-                Uri.parse(mCurrentPhotoPath)
-            )
-            startActivityForResult(Intent(MainActivity@ this, ImageCropActivity::class.java), 1234)
-        } else if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
-            if (ScannerConstants.selectedImageBitmap != null) {
-                imgBitmap.setImageBitmap(ScannerConstants.selectedImageBitmap)
-                imgBitmap.visibility = View.VISIBLE
-                btnPick.visibility = View.GONE
-            } else
-                Toast.makeText(MainActivity@ this, "Not OK", Toast.LENGTH_LONG).show()
+            startActivity(ImageCropActivity.newIntent(this, photoPath))
         }
     }
 
@@ -112,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 .onForeverDenied { permissions ->
                     Toast.makeText(
                         MainActivity@ this,
-                        "You have to grant permissions! Grant them from app settings please.",
+                        "You have to grant the permissions! Grant them from app settings please.",
                         Toast.LENGTH_LONG
                     ).show()
                     finish()
@@ -126,15 +99,15 @@ class MainActivity : AppCompatActivity() {
     fun setView() {
         btnPick.setOnClickListener(View.OnClickListener {
             val builder = AlertDialog.Builder(this@MainActivity)
-            builder.setTitle("Carbon")
-            builder.setMessage("Görseli nereden seçmek istesiniz ?")
-            builder.setPositiveButton("Galeri") { dialog, which ->
+            builder.setTitle("MaliY")
+            builder.setMessage("Where would you like to choose the image?")
+            builder.setPositiveButton("Gallery") { dialog, which ->
                 dialog.dismiss()
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
                 startActivityForResult(intent, 1111)
             }
-            builder.setNegativeButton("Kamera") { dialog, which ->
+            builder.setNegativeButton("Camera") { dialog, which ->
                 dialog.dismiss()
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 if (cameraIntent.resolveActivity(packageManager) != null) {
@@ -176,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file:" + image.absolutePath
+        photoPath = "file:" + image.absolutePath
         return image
     }
 
