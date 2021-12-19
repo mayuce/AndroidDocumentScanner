@@ -1,8 +1,10 @@
 # Android Document Scanner Library
 
-image::https://img.shields.io/badge/version-1.6.0-green.svg[]
+image::https://img.shields.io/badge/version-1.6.1-green.svg[]
 image::https://img.shields.io/badge/minSDK-21-blue.svg[]
 image::https://img.shields.io/badge/license-MIT-yellowgreen.svg[]
+
+If you liked the work you can think about https://www.paypal.com/donate/?hosted_button_id=MCMYPAN46SKFA[Donate via Paypal].
 
 This library helps you to scan any document like CamScanner.
 
@@ -26,33 +28,55 @@ Add lines below to your *app* level build.gradle
 
 [source,bourne]
 ----
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'com.quickbirdstudios:opencv:4.5.2'
-    implementation 'io.github.mayuce:AndroidDocumentScanner:1.6.0'
+    implementation 'io.github.mayuce:AndroidDocumentScanner:1.6.1'
 ----
 
 And Sync the gradle
 
 ## Usage
 
-To start ImageCrop process 
+New version of this library provides you the gear instead of ready to go car. So you need to build your own implementation with it, before you upgrade your project make sure that you know it's gonna be a braking change in your project.
 
-[source,java]
+* Add DocumentScannerView to your layout
+
+[source,xml]
 ----
-ScannerConstants.selectedImageBitmap=btimap
-startActivityForResult(Intent(MainActivity@this, ImageCropActivity::class.java),Constants.REQUEST_CROP)
+...
+            <com.labters.documentscanner.DocumentScannerView
+                    android:id="@+id/document_scanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+...
 ----
 
-Catch the cropped image
+* Set loading listener
 
-[source,java]
+[source,kotlin]
 ----
-if (requestCode==Constants.REQUEST_CROP && resultCode== Activity.RESULT_OK )
-        {
-            if (ScannerConstants.selectedImageBitmap!=null)
-                imgBitmap.setImageBitmap(ScannerConstants.selectedImageBitmap)
-            else
-                Toast.makeText(MainActivity@this,"Something wen't wrong.",Toast.LENGTH_LONG).show()
+        binding.documentScanner.setOnLoadListener { loading ->
+            binding.progressBar.isVisible = loading
+        }
+----
+
+* Set selected Bitmap into the view
+
+[source,kotlin]
+----
+        binding.documentScanner.setImage(bitmap)
+----
+
+* After selecting the edge points get cropped image
+
+[source,kotlin]
+----
+        binding.btnImageCrop.setOnClickListener {
+            lifecycleScope.launch {
+                binding.progressBar.isVisible = true
+                val image = binding.documentScanner.getCroppedImage()
+                binding.progressBar.isVisible = false
+                binding.resultImage.isVisible = true
+                binding.resultImage.setImageBitmap(image)
+            }
         }
 ----
 
@@ -60,134 +84,17 @@ if (requestCode==Constants.REQUEST_CROP && resultCode== Activity.RESULT_OK )
 
 On above Android 9.0 there is magnifier to help user to see zoomed image to crop.
 
-#### Customizing ImageCropActivity
-
-You can customize something in layout via ScannerConstants.
-
-[source,java]
-----
-    // ScannerConstants.java
-    public static String cropText="CROP",
-            backText="CLOSE",
-            imageError="Can't picked image,
-            please try again.",
-            cropError="You have not selected a valid field. Please make corrections until the lines are blue.";
-    public static String cropColor="#6666ff",backColor="#ff0000",progressColor="#331199"; // Default Colors 
-    public static boolean saveStorage=false; // Make it true if you need image in your storage. 
-----
-
-### Custom Scanner Activity
-
-With 1.5 version you have a feature to create your own Document Scanner Activity.
-You still can use old customization via ScannerConstants or you can create a new scanner activity for your layout.
-
-#### HOW 
-
-* Place Scanner layout to your layout
-
-[source,bourne]
-----
-        <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="0dp" --- * Set HERE *
-                android:layout_weight="8" --- * Set HERE *
-                android:layout_gravity="center"
-                android:layout_margin="10dp">
-
-            <FrameLayout
-                    android:id="@+id/holderImageCrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp">
-
-                <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:adjustViewBounds="true"/>
-            </FrameLayout>
-
-            <com.labters.documentscanner.libraries.PolygonView
-                    android:id="@+id/polygonView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:visibility="gone"/>
-        </FrameLayout>
-
-----
-
-* Extend your activity from DocumentScannerActivity
-* Provide values
-
-[source,java]
-----
-    @Override
-    protected FrameLayout getHolderImageCrop() {
-        return holderImageCrop;
-    }
-
-    @Override
-    protected ImageView getImageView() {
-        return imageView;
-    }
-
-    @Override
-    protected PolygonView getPolygonView() {
-        return polygonView;
-    }
-
-    @Override
-    protected Bitmap getBitmapImage() {
-        return cropImage;
-    }
-----
-
-* Override methods
-
-[source,java]
-----
-    @Override
-    protected void showProgressBar() {
-        RelativeLayout rlContainer = findViewById(R.id.rlContainer);
-        setViewInteract(rlContainer, false);
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    protected void hideProgressBar() {
-        RelativeLayout rlContainer = findViewById(R.id.rlContainer);
-        setViewInteract(rlContainer, true);
-        progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected void showError(CropperErrorType errorType) {
-        switch (errorType) {
-            case CROP_ERROR:
-                Toast.makeText(this, ScannerConstants.cropError, Toast.LENGTH_LONG).show();
-                break;
-        }
-    }
-----
-
-And *after* setting your view call *startCropping()* method
-
-If you have a trouble you can follow follow com.labters.documentscannerandroid.ImageCropActivity for how to do that.
+If you face with any issues you can take a look at com.labters.documentscannerandroid.ImageCropActivity to see how does it works.
 
 ## TO-DO
 
-- Remove RxJava dependency.
+- Nothing so far, you may tell me?..
 
 ## Thanks
 
-* Thanks RX library to improve this project.
 * Thanks OpenCV for this awesome library. - https://opencv.org/
-and
-* Inspiration from *aashari* . Thanks him for his source codes. - https://github.com/aashari/android-opencv-camera-scanner
+
+* Inspiration from *aashari* . Thanks to him for his https://github.com/aashari/android-opencv-camera-scanner[source codes].
 
 [source,bourne]
 ----
