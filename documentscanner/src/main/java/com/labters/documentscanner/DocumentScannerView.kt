@@ -115,8 +115,7 @@ class DocumentScannerView @JvmOverloads constructor(
         ).first()
         image.setImageBitmap(scaledBitmap)
         val tempBitmap = (image.drawable as BitmapDrawable).bitmap
-        val pointFs = getEdgePoints(tempBitmap)
-        polygonView.points = pointFs
+        polygonView.points = getEdgePoints(tempBitmap)
         polygonView.visibility = VISIBLE
         val padding = resources.getDimension(R.dimen.scanPadding).toInt() * 2
         val layoutParams =
@@ -126,7 +125,7 @@ class DocumentScannerView @JvmOverloads constructor(
         polygonView.setPointColor(ContextCompat.getColor(context, R.color.blue))
     }
 
-    private fun getEdgePoints(tempBitmap: Bitmap): Map<Int, PointF>? {
+    private fun getEdgePoints(tempBitmap: Bitmap): Map<Int, PointF> {
         val pointFs: List<PointF> = getContourEdgePoints(tempBitmap)
         return orderedValidEdgePoints(tempBitmap, pointFs)
     }
@@ -154,8 +153,8 @@ class DocumentScannerView @JvmOverloads constructor(
     private fun orderedValidEdgePoints(
         tempBitmap: Bitmap,
         pointFs: List<PointF>
-    ): Map<Int, PointF>? {
-        var orderedPoints: Map<Int, PointF>? = polygonView.getOrderedPoints(pointFs)
+    ): Map<Int, PointF> {
+        var orderedPoints: Map<Int, PointF> = polygonView.getOrderedPoints(pointFs)
         if (!polygonView.isValidShape(orderedPoints)) {
             orderedPoints = getOutlinePoints(tempBitmap)
         }
